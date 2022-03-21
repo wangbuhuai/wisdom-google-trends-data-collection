@@ -9,6 +9,7 @@
     <title>Wisdom Google Trends Data Collector</title>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
 </head>
+
 <body>
 <p>
     <img style="width:150px;height:auto;" src="https://drive.google.com/uc?export=download&id=18vGGS4Au7SnL9nflu3ZAsi-Xy8r4JhD3" alt="St. Charles Community College">
@@ -19,5 +20,60 @@
 <p style="margin-top:18pt;font-size:10pt;color:darkcyan;font-style:italic;text-align:center;">
     Application Developed by <strong>Dayu Wang</strong> (<a class="underline" href="mailto:dwang@stchas.edu" target="_blank">dwang@stchas.edu</a>)
 </p>
+
+<!-- Start date and end date -->
+<div>
+    <span style="display:inline-block;width:110px;"><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Start Date:</label></span>
+    <input type="date" id="start-date"
+           value="2004-01-01"> <span style="color:orangered;">(Select a date later than or equal to Jan 1, 2004.)</span><br><br>
+    <span style="display:inline-block;width:110px;"><label for="end-date"><span style="display:inline-block;width:12pt;">&bull;</span>End Date:</label></span>
+    <input type="date" id="end-date"
+           value="2022-02-28"> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
+</div>
+
+<!-- Search terms -->
+<div style="margin:24pt 0 0 0;padding:0;">
+    <p style="margin:0;padding:0;">Search Terms <span style="color:orangered;">(One Search Term per Row)</span></p>
+    <label for="terms"></label><textarea id="terms" rows=10 style="margin:6pt 0 0 0;outline:none;font-family:Verdana,sans-serif;font-size:10pt;width:100%;resize:none;"></textarea>
+</div>
+
+<!-- Suggestions -->
+<table style="border-collapse:collapse;border:none;margin:24pt 0 0 0;line-height:150%;width:100%;">
+    <tbody>
+    <tr>
+        <td style="border:none;padding:0;vertical-align: center;text-align: left;background: transparent;width:35%;">
+            Suggestions:&nbsp;&nbsp;
+            <label>
+                <input type="radio" name="suggestions" style="outline:none;">On
+            </label>
+            <label>
+                <input type="radio" name="suggestions" style="outline:none;">Off
+            </label>
+        </td>
+        <td style="border:none;padding:0;vertical-align: center;text-align: left; background: transparent;">
+            <label for="suggestions"></label><textarea id="suggestions" rows=10 style="margin:0;outline:none;font-family:Verdana,sans-serif;font-size:10pt;width:100%;resize:none;"></textarea>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Beginning index -->
+<div style="margin:24pt 0 0 0;padding:0;">
+    <label for="index">Index:
+        <input type="number" id="index" value="1">
+    </label>
+</div>
+
+<!-- Locale -->
+<div style="margin:24pt 0 0 0;padding:0;">
+    <label for="locale">Locale
+        <input type="text" id="locale" value="US" disabled> <span style="color:orangered;">(Cannot change)</span>
+    </label>
+</div>
+
+<!-- Buttons -->
+<div style="margin:24pt 0 0 0;padding:0;">
+    <button style="display:block;margin:0 auto 12pt auto;font-family:Verdana,sans-serif;font-size:12pt;vertical-align: middle;text-align: center;height:32px;">Start Data Collection</button>
+</div>
 </body>
 </html>

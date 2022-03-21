@@ -2,7 +2,7 @@
   "name": "wisdom-google-trends-data-collection",
   "version": "1.0.0",
   "description": "This web application automatically collects data on Google Trends based on the user input.",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server.js"
   },

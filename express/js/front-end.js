@@ -16,39 +16,48 @@ function getDate() {
     return `${year}-${month}-${date}`;
 }
 
-function exportInputData() {
-    let startDate = document.getElementById("start-date").value;
-    let xhr = new XMLHttpRequest();
-    let url = "#";
-    xhr.open("POST", url, true);
+document.addEventListener("DOMContentLoaded",() => {
+    const fileSelector = document.createElement("input");
+    fileSelector.id = "input-file-selector";
+    fileSelector.type = "file";
+    fileSelector.hidden = true;
+    fileSelector.accept = ".txt";
+    fileSelector.multiple = false;
+    document.body.appendChild(fileSelector);
 
-    // Set the request header i.e. which type of content you are sending
-    xhr.setRequestHeader("Content-Type", "application/json");
+    fileSelector.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.addEventListener("load", (event) => {
+            const inputData = JSON.parse(event.target.result.toString());
+            document.getElementById("start-date").value = inputData["start-date"];
+            document.getElementById("end-date").value = inputData["end-date"];
+            document.getElementById("search-terms").value = inputData["search-terms"];
+            const suggestionSwitch = inputData["suggestions"];
+            if (suggestionSwitch === "on") {
+                document.getElementById("suggestions-on").checked = true;
+                document.getElementById("suggestions-off").checked = false;
+                document.getElementById("suggestions").disabled = false;
+                document.getElementById("suggestions").style.color = document.getElementById("suggestions-on").checked ? "blue" : "gray";
+                document.getElementById("suggestions").value = inputData["suggestions-text"];
+            } else {
+                document.getElementById("suggestions-on").checked = false;
+                document.getElementById("suggestions-off").checked = true;
+                document.getElementById("suggestions").disabled = true;
+                document.getElementById("suggestions").style.color = document.getElementById("suggestions-on").checked ? "blue" : "gray";
+            }
+            document.getElementById("index").value = parseInt(inputData["index"]);
+        });
+        reader.readAsText(file);
+    });
 
-    // Create a state change callback
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Print received data from server
-            console.log(this.responseText);
-        }
-    };
-
-    // Converting JSON data to string
-    let data = JSON.stringify({ "start": startDate });
-    console.log(data);
-
-    // Sending data with the request
-    xhr.send(data);
-}
-
-document.addEventListener("DOMContentLoaded",function() {
     let date = getDate();
     document.getElementById("start-date").max = date;
     document.getElementById("end-date").value = date;
     document.getElementById("end-date").min = document.getElementById("start-date").value;
     document.getElementById("end-date").max = date;
 
-    document.getElementById("start-date").addEventListener("change", function() {
+    document.getElementById("start-date").addEventListener("change", () => {
         let startDate = new Date(document.getElementById("start-date").value);
         let endDate = new Date(document.getElementById("end-date").value);
         if (startDate.getTime() > endDate.getTime()) {
@@ -57,12 +66,36 @@ document.addEventListener("DOMContentLoaded",function() {
         document.getElementById("end-date").min = document.getElementById("start-date").value;
     });
 
-    document.getElementById("suggestions-on").addEventListener("change", function() {
+    document.getElementById("suggestions-on").addEventListener("change", () => {
         document.getElementById("suggestions").disabled = !document.getElementById("suggestions-on").checked;
         document.getElementById("suggestions").style.color = document.getElementById("suggestions-on").checked ? "blue" : "gray";
     });
-    document.getElementById("suggestions-off").addEventListener("change", function() {
+    document.getElementById("suggestions-off").addEventListener("change", () => {
         document.getElementById("suggestions").disabled = document.getElementById("suggestions-off").checked;
         document.getElementById("suggestions").style.color = document.getElementById("suggestions-off").checked ? "gray" : "blue";
+    });
+
+    document.getElementById("import-file").addEventListener("click", () => {
+        document.getElementById("reset").click();
+        document.getElementById("input-file-selector").value = "";
+        document.getElementById("input-file-selector").click();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+        let date = getDate();
+        document.getElementById("start-date").value = "2004-01-01";
+        document.getElementById("start-date").min = "2004-01-01";
+        document.getElementById("start-date").max = date;
+        document.getElementById("end-date").value = date;
+        document.getElementById("end-date").min = document.getElementById("start-date").value;
+        document.getElementById("end-date").max = date;
+        document.getElementById("search-terms").value = "";
+        document.getElementById("suggestions-on").checked = false;
+        document.getElementById("suggestions-off").checked = true;
+        document.getElementById("suggestions").value = "";
+        document.getElementById("suggestions").disabled = true;
+        document.getElementById("suggestions").style.color = document.getElementById("suggestions-off").checked ? "gray" : "blue";
+        document.getElementById("index").value = 1;
+        document.getElementById("input-file-selector").value = "";
     });
 });

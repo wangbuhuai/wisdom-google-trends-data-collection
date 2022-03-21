@@ -4,7 +4,7 @@
 
 
 /** Returns the current date and time in "yyyy-mm-ddThhmm" format.
-    @returns: current date in "yyyy-mm-dd" format
+    @returns: current date in "yyyy-mm-ddThhmm" format
 */
 function getTime() {
     let date = new Date();
@@ -20,15 +20,6 @@ function getTime() {
     return `${year}-${month}-${day}T${hour}${min}`;
 }
 
-function callback(zip, res) {
-    const filename = "SVI_Results_-_" + getTime() + ".zip";
-    const data = zip.toBuffer();
-    res.set("Content-Type", "application/octet-stream");
-    res.set("Content-Disposition", `attachment; filename=${filename}`);
-    res.set("Content-Length", data.length);
-    res.send(data);
-}
-
 const http = require("http");
 const express = require("express");
 const path = require("path");
@@ -37,6 +28,7 @@ const fs = require("fs");
 const googleTrends = require("google-trends-api");
 const csvJson = require("csvjson");
 const admZip = require("adm-zip");
+const alert = require("alert");
 
 const app = express();
 app.use(express.static("express"));
@@ -62,6 +54,8 @@ app.post("/export", (req, res) => {
 });
 
 app.post("/collect", (req, res) => {
+    alert("Data being processed, please wait...");
+
     // Delete the old files in the directory.
     const directory = path.join(__dirname + "/svi_output_files");
     fs.readdirSync(directory).forEach(file => {
@@ -70,21 +64,14 @@ app.post("/collect", (req, res) => {
 
     const startDate = req.body["start-date"];
     const endDate = req.body["end-date"];
-    const searchTerms = req.body["search-terms"].split(/\r\n/);
-    const turnOnSuggestions = req.body["suggestions"] === "on";
-    let suggestions = null;
-    if (turnOnSuggestions) { suggestions = req.body["suggestions-text"].split(/\r\n/); }
+    const searchTerms = req.body["search-terms"].split(/\r\n/).filter(element => { return element.trim() !== ''; });
     const offset = parseInt(req.body["index"]);
-    const zipFile = new admZip();
+    const zipFile = new admZip(undefined, undefined);
     let itemProcessed = 0;
 
     searchTerms.forEach((term, index) => {
-
-        // Fuzzy match
-        if (turnOnSuggestions) {}
-
         googleTrends.interestOverTime({
-            keyword: term,
+            keyword: term.trim(),
             startTime: new Date(startDate),
             endTime: new Date(endDate),
             geo: "US",
@@ -100,7 +87,15 @@ app.post("/collect", (req, res) => {
                 fs.writeFileSync(outputFile, outputData);
                 zipFile.addLocalFile(outputFile, undefined, undefined, "no comments");
                 itemProcessed++;
-                if (itemProcessed === searchTerms.length) { callback(zipFile, res); }
+                if (itemProcessed === searchTerms.length) {
+                    const filename = "SVI_Results_-_" + getTime() + ".zip";
+                    const data = zipFile.toBuffer();
+                    res.set("Content-Type", "application/octet-stream");
+                    res.set("Content-Disposition", `attachment; filename=${filename}`);
+                    res.set("Content-Length", data.length.toString());
+                    res.send(data);
+                    alert("Output data being downloaded...");
+                }
             });
     });
 });

@@ -1,0 +1,23 @@
+{
+  "name": "wisdom-google-trends-data-collection",
+  "version": "1.0.0",
+  "description": "This web application automatically collects data on Google Trends based on the user input.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangbuhuai/wisdom-google-trends-data-collection.git"
+  },
+  "keywords": [],
+  "author": "Dayu Wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wangbuhuai/wisdom-google-trends-data-collection/issues"
+  },
+  "homepage": "https://github.com/wangbuhuai/wisdom-google-trends-data-collection#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

@@ -23,42 +23,33 @@
 </p>
 
 <!-- Start date and end date -->
-<div>
-    <span style="display:inline-block;width:110px;"><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Start Date:</label></span>
+<div style="margin-top:24pt;">
+    <p><span style="display:inline-block;width:110px;"><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Start Date:</label></span>
     <input type="date" id="start-date"
            value="2004-01-01"
            min="2004-01-01"
-           onkeydown="return false;"> <span style="color:orangered;">(Select a date later than or equal to Jan 1, 2004.)</span><br><br>
+           onkeydown="return false;"
+           required> <span style="color:orangered;">(Select a date later than or equal to Jan 1, 2004.)</span>
+    </p>
+    <p style="margin-top:12pt;">
     <span style="display:inline-block;width:110px;"><label for="end-date"><span style="display:inline-block;width:12pt;">&bull;</span>End Date:</label></span>
     <input type="date" id="end-date"
-           onkeydown="return false;"> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
+           onkeydown="return false;"
+           required> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
+    </p>
 </div>
 
 <!-- Search terms -->
 <div>
-    <p><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Search Terms <span style="color:orangered;">(One Search Term per Row)</span></p>
-    <label for="terms"></label><textarea id="terms" rows=10 style="margin:6pt 0 0 0;outline:none;font-family:Verdana,sans-serif;font-size:10pt;width:100%;resize:none;"></textarea>
+    <p><label for="search-terms"><span style="display:inline-block;width:12pt;">&bull;</span>Search Terms <span style="color:orangered;">(One search term per row)</span></label></p>
+    <textarea id="search-terms" rows=10 style="margin-top:16pt;margin-left:12pt;width:776px;" required></textarea>
 </div>
 
 <!-- Suggestions -->
-<table style="border-collapse:collapse;border:none;margin:24pt 0 0 0;line-height:150%;width:100%;">
-    <tbody>
-    <tr>
-        <td style="border:none;padding:0;vertical-align: center;text-align: left;background: transparent;width:35%;">
-            Suggestions:&nbsp;&nbsp;
-            <label>
-                <input type="radio" name="suggestions" style="outline:none;">On
-            </label>
-            <label>
-                <input type="radio" name="suggestions" style="outline:none;">Off
-            </label>
-        </td>
-        <td style="border:none;padding:0;vertical-align: center;text-align: left; background: transparent;">
-            <label for="suggestions"></label><textarea id="suggestions" rows=10 style="margin:0;outline:none;font-family:Verdana,sans-serif;font-size:10pt;width:100%;resize:none;"></textarea>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div>
+    <p><label for="suggestions"><span style="display:inline-block;width:12pt;">&bull;</span>Suggestions:</label>&nbsp;&nbsp;<input id="suggestions-on" type="radio" name="suggestions"><label for="suggestions-on">On</label>&nbsp;&nbsp;<input id="suggestions-off" type="radio" name="suggestions" checked><label for="suggestions-off">Off</label></p>
+    <textarea id="suggestions" rows=10 style="margin-top:16pt;margin-left:12pt;width:776px;" disabled></textarea>
+</div>
 
 <!-- Beginning index -->
 <div style="margin:24pt 0 0 0;padding:0;">

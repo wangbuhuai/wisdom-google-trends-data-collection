@@ -31,4 +31,13 @@ document.addEventListener("DOMContentLoaded",function() {
         }
         document.getElementById("end-date").min = document.getElementById("start-date").value;
     });
+
+    document.getElementById("suggestions-on").addEventListener("change", function() {
+        document.getElementById("suggestions").disabled = !document.getElementById("suggestions-on").checked;
+        document.getElementById("suggestions").style.color = document.getElementById("suggestions-on").checked ? "blue" : "gray";
+    });
+    document.getElementById("suggestions-off").addEventListener("change", function() {
+        document.getElementById("suggestions").disabled = document.getElementById("suggestions-off").checked;
+        document.getElementById("suggestions").style.color = document.getElementById("suggestions-off").checked ? "gray" : "blue";
+    });
 });

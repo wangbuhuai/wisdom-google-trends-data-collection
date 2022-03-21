@@ -11,11 +11,11 @@ body {
     line-height: 150%;
     margin: 0 auto;
     padding: 12px;
-    width: 1200px;
+    width: 800px;
 }
 
 div {
-    margin: 24pt 0 0 0;
+    margin: 12pt 0 0 0;
     padding: 0;
 }
 
@@ -34,9 +34,24 @@ input {
     outline: none;
 }
 
+input[type=radio] {
+    position: relative;
+    top: 1px;
+}
+
 p {
     margin: 0;
     padding: 0;
+}
+
+textarea {
+    color: blue;
+    font-family: Verdana, sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    outline: none;
+    padding: 3pt;
+    resize: none;
 }
 
 .underline {

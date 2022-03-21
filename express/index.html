@@ -1,11 +1,12 @@
 <!-- Created by Dayu Wang (dwang@stchas.edu) on 2022-03-20 -->
 
-<!-- Last updated by Dayu Wang (dwang@stchas.edu) on 2022-03-20 -->
+<!-- Last updated by Dayu Wang (dwang@stchas.edu) on 2022-03-21 -->
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Wisdom Google Trends Data Collector</title>
     <script type="text/javascript" src="./js/front-end.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/style.css">
@@ -22,10 +23,12 @@
     Application Developed by <strong>Dayu Wang</strong> (<a class="underline" href="mailto:dwang@stchas.edu" target="_blank">dwang@stchas.edu</a>)
 </p>
 
+<form action="/export" method="post">
 <!-- Start date and end date -->
 <div style="margin-top:24pt;">
     <p><span style="display:inline-block;width:110px;"><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Start Date:</label></span>
     <input type="date" id="start-date"
+           name="start-date"
            value="2004-01-01"
            min="2004-01-01"
            onkeydown="return false;"
@@ -34,6 +37,7 @@
     <p style="margin-top:12pt;">
     <span style="display:inline-block;width:110px;"><label for="end-date"><span style="display:inline-block;width:12pt;">&bull;</span>End Date:</label></span>
     <input type="date" id="end-date"
+           name="end-date"
            onkeydown="return false;"
            required> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
     </p>
@@ -42,18 +46,18 @@
 <!-- Search terms -->
 <div>
     <p><label for="search-terms"><span style="display:inline-block;width:12pt;">&bull;</span>Search Terms <span style="color:orangered;">(One search term per row)</span></label></p>
-    <textarea id="search-terms" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" required></textarea>
+    <textarea id="search-terms" name="search-terms" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" required></textarea>
 </div>
 
 <!-- Suggestions -->
 <div>
-    <p><label for="suggestions"><span style="display:inline-block;width:12pt;">&bull;</span>Suggestions:</label>&nbsp;&nbsp;<input id="suggestions-on" type="radio" name="suggestions"><label for="suggestions-on">On</label>&nbsp;&nbsp;<input id="suggestions-off" type="radio" name="suggestions" checked><label for="suggestions-off">Off</label>&nbsp;&nbsp;<span style="color:orangered;">(Fuzzy matching techniques are applied here if suggestions are turned on.)</span></p>
-    <textarea id="suggestions" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" disabled></textarea>
+    <p><label for="suggestions"><span style="display:inline-block;width:12pt;">&bull;</span>Suggestions:</label>&nbsp;&nbsp;<input id="suggestions-on" type="radio" value="on" name="suggestions"><label for="suggestions-on">On</label>&nbsp;&nbsp;<input id="suggestions-off" type="radio" value="off" name="suggestions" checked><label for="suggestions-off">Off</label>&nbsp;&nbsp;<span style="color:orangered;">(Fuzzy matching techniques are applied here if suggestions are turned on.)</span></p>
+    <textarea id="suggestions" name="suggestions-text" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" disabled></textarea>
 </div>
 
 <!-- Beginning index -->
 <div>
-    <span style="display:inline-block;width:110px;"><label for="index"><span style="display:inline-block;width:12pt;">&bull;</span>Index:</label></span><input type="number" id="index" value=1 min=1 onkeydown="return false;" required>&nbsp;&nbsp;<span style="color:orangered;">(Specify the number of the first search term in the output files.)</span>
+    <span style="display:inline-block;width:110px;"><label for="index"><span style="display:inline-block;width:12pt;">&bull;</span>Index:</label></span><input type="number" id="index" name="index" value=1 min=1 onkeydown="return false;" required>&nbsp;&nbsp;<span style="color:orangered;">(Specify the number of the first search term in the output files.)</span>
 </div>
 
 <!-- Locale -->
@@ -65,7 +69,7 @@
 <table style="margin-top:24pt;">
     <tbody>
     <tr>
-        <td style="width:300px;"><button style="background:#ffff99;">Start Data Collection</button><button style="background:lightpink;">Reset Page</button><button style="background:lightcyan;">Export Input to File</button><button style="background:gold;">Import Input File</button></td>
+        <td style="width:300px;"><button style="background:#ffff99;">Start Data Collection</button><button style="background:lightpink;">Reset Page</button><button style="background:lightcyan;" type="submit">Export Input to File</button><button style="background:gold;">Import Input File</button></td>
         <td style="width:500px;">
             <p style="margin-bottom:6pt;text-align:center;color:orangered;"><label for="console">(Console)</label></p>
             <textarea id="console" rows="10" style="width:500px;color:gray;" disabled></textarea>
@@ -73,6 +77,7 @@
     </tr>
     </tbody>
 </table>
+</form>
 
 </body>
 </html>

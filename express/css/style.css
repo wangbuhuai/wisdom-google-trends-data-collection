@@ -31,6 +31,7 @@ input {
     color: blue;
     font-family: verdana, sans-serif;
     font-size: 11pt;
+    outline: none;
 }
 
 p {

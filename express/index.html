@@ -27,10 +27,11 @@
     <span style="display:inline-block;width:110px;"><label for="start-date"><span style="display:inline-block;width:12pt;">&bull;</span>Start Date:</label></span>
     <input type="date" id="start-date"
            value="2004-01-01"
-           min="2004-01-01"> <span style="color:orangered;">(Select a date later than or equal to Jan 1, 2004.)</span><br><br>
+           min="2004-01-01"
+           onkeydown="return false;"> <span style="color:orangered;">(Select a date later than or equal to Jan 1, 2004.)</span><br><br>
     <span style="display:inline-block;width:110px;"><label for="end-date"><span style="display:inline-block;width:12pt;">&bull;</span>End Date:</label></span>
     <input type="date" id="end-date"
-           value="2022-02-28"> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
+           onkeydown="return false;"> <span style="color:orangered;">(Select a date later than or equal to the start date.)</span>
 </div>
 
 <!-- Search terms -->

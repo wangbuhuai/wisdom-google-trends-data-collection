@@ -16,26 +16,19 @@ function getDate() {
     return `${year}-${month}-${date}`;
 }
 
-$(function() {
-    $("#start-date").on("change", function () {
+document.addEventListener("DOMContentLoaded",function() {
+    let date = getDate();
+    document.getElementById("start-date").max = date;
+    document.getElementById("end-date").value = date;
+    document.getElementById("end-date").min = document.getElementById("start-date").value;
+    document.getElementById("end-date").max = date;
+
+    document.getElementById("start-date").addEventListener("change", function() {
         let startDate = new Date(document.getElementById("start-date").value);
         let endDate = new Date(document.getElementById("end-date").value);
         if (startDate.getTime() > endDate.getTime()) {
             document.getElementById("end-date").value = document.getElementById("start-date").value;
         }
-        $("#end-date").attr({
-            "min": document.getElementById("start-date").value
-        });
-    });
-});
-
-$(document).ready(function() {
-    let date = getDate();
-    let startDate = $("#start-date");
-    startDate.attr("max", date);
-    $("#end-date").attr({
-        "value": date,
-        "min": startDate.attr("value"),
-        "max": date
+        document.getElementById("end-date").min = document.getElementById("start-date").value;
     });
 });

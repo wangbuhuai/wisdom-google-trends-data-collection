@@ -42,32 +42,37 @@
 <!-- Search terms -->
 <div>
     <p><label for="search-terms"><span style="display:inline-block;width:12pt;">&bull;</span>Search Terms <span style="color:orangered;">(One search term per row)</span></label></p>
-    <textarea id="search-terms" rows=10 style="margin-top:16pt;margin-left:12pt;width:776px;" required></textarea>
+    <textarea id="search-terms" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" required></textarea>
 </div>
 
 <!-- Suggestions -->
 <div>
-    <p><label for="suggestions"><span style="display:inline-block;width:12pt;">&bull;</span>Suggestions:</label>&nbsp;&nbsp;<input id="suggestions-on" type="radio" name="suggestions"><label for="suggestions-on">On</label>&nbsp;&nbsp;<input id="suggestions-off" type="radio" name="suggestions" checked><label for="suggestions-off">Off</label></p>
-    <textarea id="suggestions" rows=10 style="margin-top:16pt;margin-left:12pt;width:776px;" disabled></textarea>
+    <p><label for="suggestions"><span style="display:inline-block;width:12pt;">&bull;</span>Suggestions:</label>&nbsp;&nbsp;<input id="suggestions-on" type="radio" name="suggestions"><label for="suggestions-on">On</label>&nbsp;&nbsp;<input id="suggestions-off" type="radio" name="suggestions" checked><label for="suggestions-off">Off</label>&nbsp;&nbsp;<span style="color:orangered;">(Fuzzy matching techniques are applied here if suggestions are turned on.)</span></p>
+    <textarea id="suggestions" rows=10 style="margin-top:16pt;margin-left:12pt;width:774px;" disabled></textarea>
 </div>
 
 <!-- Beginning index -->
-<div style="margin:24pt 0 0 0;padding:0;">
-    <label for="index">Index:
-        <input type="number" id="index" value="1">
-    </label>
+<div>
+    <span style="display:inline-block;width:110px;"><label for="index"><span style="display:inline-block;width:12pt;">&bull;</span>Index:</label></span><input type="number" id="index" value=1 min=1 onkeydown="return false;" required>&nbsp;&nbsp;<span style="color:orangered;">(Specify the number of the first search term in the output files.)</span>
 </div>
 
 <!-- Locale -->
-<div style="margin:24pt 0 0 0;padding:0;">
-    <label for="locale">Locale
-        <input type="text" id="locale" value="US" disabled> <span style="color:orangered;">(Cannot change)</span>
-    </label>
+<div>
+    <span style="display:inline-block;width:110px;"><label for="locale"><span style="display:inline-block;width:12pt;">&bull;</span>Locale:</label></span><input type="text" id="locale" value="US" style="color:gray;" disabled>&nbsp;&nbsp;<span style="color:orangered;">(<strong style="color:red;">Cannot</strong> change)</span>
 </div>
 
-<!-- Buttons -->
-<div style="margin:24pt 0 0 0;padding:0;">
-    <button style="display:block;margin:0 auto 12pt auto;font-family:Verdana,sans-serif;font-size:12pt;vertical-align: middle;text-align: center;height:32px;">Start Data Collection</button>
-</div>
+<!-- Buttons and console -->
+<table style="margin-top:24pt;">
+    <tbody>
+    <tr>
+        <td style="width:300px;"><button style="background:#ffff99;">Start Data Collection</button><button style="background:lightpink;">Reset Page</button></td>
+        <td style="width:500px;">
+            <p style="margin-bottom:6pt;text-align:center;color:orangered;"><label for="console">(Console)</label></p>
+            <textarea id="console" rows="10" style="width:500px;color:gray;" disabled></textarea>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

@@ -20,15 +20,27 @@ function getTime() {
     return `${year}-${month}-${day}T${hour}${min}`;
 }
 
+/** Converts a date to "yyyy-mm-dd" format.
+    @returns: input date in "yyyy-mm-dd" format
+*/
+function getDate(date) {
+    let year = `${date.getFullYear()}`;
+    let month = `${date.getMonth() + 1}`;
+    if (month.length === 1) { month = '0' + month; }
+    date = `${date.getDate()}`;
+    if (date.length === 1) { date = '0' + date; }
+    return `${year}-${month}-${date}`;
+}
+
 const http = require("http");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const googleTrends = require("google-trends-api");
-const csvJson = require("csvjson");
 const admZip = require("adm-zip");
 const alert = require("alert");
+const csvWriter = require("csv-writer");
 
 const app = express();
 app.use(express.static("express"));
@@ -78,24 +90,37 @@ app.post("/collect", (req, res) => {
             hl: "en-US"
         })
             .then((results) => {
-                const outputData = csvJson.toCSV(results, {
-                    headers : "key"
-                });
                 let indexStr = (index + offset).toString();
                 while (indexStr.length < 3) { indexStr = '0' + indexStr; }
                 const outputFile = path.join(__dirname + "/svi_output_files/" + indexStr + "_-_" + term.replace(/\s+/, '_') + "_-_" + getTime() + ".csv");
-                fs.writeFileSync(outputFile, outputData);
-                zipFile.addLocalFile(outputFile, undefined, undefined, "no comments");
-                itemProcessed++;
-                if (itemProcessed === searchTerms.length) {
-                    const filename = "SVI_Results_-_" + getTime() + ".zip";
-                    const data = zipFile.toBuffer();
-                    res.set("Content-Type", "application/octet-stream");
-                    res.set("Content-Disposition", `attachment; filename=${filename}`);
-                    res.set("Content-Length", data.length.toString());
-                    res.send(data);
-                    alert("Output data being downloaded...");
-                }
+                const writer = csvWriter.createObjectCsvWriter({
+                    path: outputFile,
+                    header: [
+                        { id: "date", title: "Date" },
+                        { id: "svi_index", title: `SVI Index of "${term}"` },
+                    ]
+                });
+                const csvData = [];
+                const rawData = JSON.parse(results.toString()).default["timelineData"];
+                rawData.forEach(element => {
+                    csvData.push({
+                        date : getDate(new Date(element["formattedAxisTime"])),
+                        svi_index : element["value"][0]
+                    });
+                });
+                writer.writeRecords(csvData).then(() => {
+                    zipFile.addLocalFile(outputFile, undefined, undefined, "no comments");
+                    itemProcessed++;
+                    if (itemProcessed === searchTerms.length) {
+                        const filename = "SVI_Results_-_" + getTime() + ".zip";
+                        const data = zipFile.toBuffer();
+                        res.set("Content-Type", "application/octet-stream");
+                        res.set("Content-Disposition", `attachment; filename=${filename}`);
+                        res.set("Content-Length", data.length.toString());
+                        res.send(data);
+                        alert("Output data being downloaded...");
+                    }
+                });
             });
     });
 });

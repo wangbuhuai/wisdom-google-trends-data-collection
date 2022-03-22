@@ -7,7 +7,17 @@
     @returns: current date in "yyyy-mm-dd" format
 */
 function getDate() {
-    let date = new Date();
+    let formatter = new Intl.DateTimeFormat('en-US', {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+        timeZone: "America/Chicago"
+    });
+    let date = new Date(formatter.format(new Date()));
     let year = `${date.getFullYear()}`;
     let month = `${date.getMonth() + 1}`;
     if (month.length === 1) { month = '0' + month; }

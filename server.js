@@ -7,7 +7,17 @@
     @returns: current date in "yyyy-mm-ddThhmm" format
 */
 function getTime() {
-    let date = new Date();
+    let formatter = new Intl.DateTimeFormat('en-US', {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+        timeZone: "America/Chicago"
+    });
+    let date = new Date(formatter.format(new Date()));
     let year = `${date.getFullYear()}`;
     let month = `${date.getMonth() + 1}`;
     if (month.length === 1) { month = '0' + month; }
@@ -24,6 +34,17 @@ function getTime() {
     @returns: input date in "yyyy-mm-dd" format
 */
 function getDate(date) {
+    let formatter = new Intl.DateTimeFormat('en-US', {
+        year: "numeric",
+        month: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+        timeZone: "America/Chicago"
+    });
+    date = new Date(formatter.format(date));
     let year = `${date.getFullYear()}`;
     let month = `${date.getMonth() + 1}`;
     if (month.length === 1) { month = '0' + month; }
@@ -39,7 +60,6 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const googleTrends = require("google-trends-api");
 const admZip = require("adm-zip");
-const alert = require("alert");
 const csvWriter = require("csv-writer");
 
 const app = express();
@@ -66,8 +86,6 @@ app.post("/export", (req, res) => {
 });
 
 app.post("/collect", (req, res) => {
-    alert("Data being processed, please wait...");
-
     // Delete the old files in the directory.
     const directory = path.join(__dirname + "/svi_output_files");
     fs.readdirSync(directory).forEach(file => {
@@ -118,7 +136,6 @@ app.post("/collect", (req, res) => {
                         res.set("Content-Disposition", `attachment; filename=${filename}`);
                         res.set("Content-Length", data.length.toString());
                         res.send(data);
-                        alert("Output data being downloaded...");
                     }
                 });
             });
